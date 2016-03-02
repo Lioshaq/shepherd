@@ -1,0 +1,4 @@
+id;username;password;email;authorities
+418b0636-7f16-4478-9112-3f4f78b9f11e;+37369123456;$2a$10$UgmAXwHrQm0rMHoagEMxN.O6GsejNVjy.fmxqJD18MvAO5JLKpyyK;user@mi.md;USER
+be68a632-3ca1-4136-bb7a-cfcb8c10b769;+37369654321;$2a$10$UgmAXwHrQm0rMHoagEMxN.O6GsejNVjy.fmxqJD18MvAO5JLKpyyK;admin@mi.md;ADMIN
+69349c9e-2dcd-4c15-9091-5ec1599e83c3;+37369715586;$2a$10$UgmAXwHrQm0rMHoagEMxN.O6GsejNVjy.fmxqJD18MvAO5JLKpyyK;alexei.melnic@gmail.com;ADMIN

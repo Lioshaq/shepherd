@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2" />
+    <property name="now" value="current_timestamp" dbms="postgresql" />
+    <property name="now" value="sysdate" dbms="oracle" />
+
+    <property name="autoIncrement" value="true"
+        dbms="mysql,h2,postgresql,oracle" />
+
+    <!-- <changeSet id="00000000000000" author="ael" dbms="postgresql,oracle"> -->
+    <!-- <createSequence sequenceName="hibernate_sequence" startValue="1000" 
+        incrementBy="1"/> -->
+    <!-- </changeSet> -->
+
+    <changeSet author="ael_" id="dropTable_users" runOnChange="true">
+        <preConditions onFail="CONTINUE">
+            <tableExists tableName="users" schemaName="public" />
+        </preConditions>
+        <dropTable cascadeConstraints="true" schemaName="public"
+            tableName="users" />
+    </changeSet>
+    <changeSet id="table_users_drop_create" author="ael_"
+        runOnChange="true">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="users" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users" schemaName="public">
+            <column name="id" type="varchar(100)">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="username" type="varchar(30)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="password" type="varchar(60)" />
+            <column name="email" type="varchar(60)" />
+            <column name="phone" type="varchar(20)"/>
+            <column name="authorities" type="varchar(60)" />
+            <column name="last_password_reset" type="date" />
+        </createTable>
+
+        <!-- <createIndex indexName="idx_user_login" -->
+        <!-- tableName="jhi_user" -->
+        <!-- unique="true"> -->
+        <!-- <column name="login" type="varchar(50)"/> -->
+        <!-- </createIndex> -->
+        <!-- <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/> -->
+
+        <!-- <addForeignKeyConstraint baseColumnNames="authority_name" -->
+        <!-- baseTableName="jhi_user_authority" -->
+        <!-- constraintName="fk_authority_name" -->
+        <!-- referencedColumnNames="name" -->
+        <!-- referencedTableName="jhi_authority"/> -->
+
+        <!-- <addForeignKeyConstraint baseColumnNames="user_id" -->
+        <!-- baseTableName="jhi_user_authority" -->
+        <!-- constraintName="fk_user_id" -->
+        <!-- referencedColumnNames="id" -->
+        <!-- referencedTableName="jhi_user"/> -->
+
+        <loadData encoding="UTF-8" file="config/liquibase/data/users.csv"
+            separator=";" tableName="users" />
+
+    </changeSet>
+
+</databaseChangeLog>
