@@ -15,20 +15,21 @@
         incrementBy="1"/> -->
     <!-- </changeSet> -->
 
-    <changeSet author="ael_" id="dropTable_users" runOnChange="true">
-        <preConditions onFail="CONTINUE">
+    <changeSet author="ael" id="dropTable_users" runAlways="true" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
             <tableExists tableName="users" schemaName="public" />
         </preConditions>
+        <comment>Comments should go after preCondition. If they are before then liquibase usually gives error.</comment>
         <dropTable cascadeConstraints="true" schemaName="public"
             tableName="users" />
     </changeSet>
-    <changeSet id="table_users_drop_create" author="ael_"
-        runOnChange="true">
-        <preConditions onFail="CONTINUE">
+    <changeSet author="ael" id="table_users_create" runAlways="true" dbms="postgresql">
+        <preConditions onFail="HALT">
             <not>
                 <tableExists tableName="users" schemaName="public"/>
             </not>
         </preConditions>
+        <comment>Comments should go after preCondition. create datbase.</comment>
         <createTable tableName="users" schemaName="public">
             <column name="id" type="varchar(100)">
                 <constraints primaryKey="true" nullable="false" />
@@ -66,5 +67,43 @@
             separator=";" tableName="users" />
 
     </changeSet>
+
+    <changeSet author="ael" id="dropTable_account"  runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="account" schemaName="public" />
+        </preConditions>
+        <dropTable cascadeConstraints="true" schemaName="public"
+            tableName="account" />
+    </changeSet>
+    <changeSet id="table_account_drop_create" author="ael_"
+         runAlways="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="account" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="account" schemaName="public">
+            <column name="id" type="varchar(100)">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="userid" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_open" type="date"  />
+            <column name="date_close" type="date"/>
+            <column name="balance" type="integer" />
+            <column name="currency_code" type="integer"/>
+            <column name="status" type="varchar(100)" />
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="userid"
+                baseTableName="account"
+                constraintName="fk_userid"
+                referencedColumnNames="id"
+                referencedTableName="users"/>
+        
+        <loadData encoding="UTF-8" file="config/liquibase/data/account.csv"
+            separator=";" tableName="account" />
+      </changeSet>
 
 </databaseChangeLog>

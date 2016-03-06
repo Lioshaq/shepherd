@@ -3,6 +3,8 @@ package md.mi.controller.rest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import md.mi.domain.entity.Account;
+import md.mi.domain.entity.User;
 import md.mi.domain.entity.UserBuilder;
 import md.mi.model.json.request.RegisterRequest;
 import md.mi.model.json.response.RegisterResponse;
@@ -24,6 +26,7 @@ public class RegisterController {
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
 
+
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest, HttpServletRequest request) {
         try{
@@ -32,8 +35,10 @@ public class RegisterController {
         }
         catch(UsernameNotFoundException ex) {
             UserBuilder userBuilder = new UserBuilder(registerRequest.getPhone(), registerRequest.getPassword(), registerRequest.getEmail());
-            userDetailsServiceImpl.saveAndFlush(userBuilder.authorities("USER").build());
-            return ResponseEntity.ok(new RegisterResponse(registerRequest.getEmail()));
+            User newUser = userDetailsServiceImpl.saveAndFlush(userBuilder.authorities("USER").build());
+            Account newAccount = new Account(newUser.getId(), 0, 820, "Active");
+            Account savedAccount = userDetailsServiceImpl.saveAndFlushAccount(newAccount);
+            return ResponseEntity.ok(new RegisterResponse(newUser.getId()));
         }
     }
 }

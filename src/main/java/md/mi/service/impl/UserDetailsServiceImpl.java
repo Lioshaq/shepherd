@@ -1,7 +1,9 @@
 package md.mi.service.impl;
 
+import md.mi.domain.entity.Account;
 import md.mi.domain.entity.User;
 import md.mi.model.factory.AuthUserFactory;
+import md.mi.repository.AccountRepository;
 import md.mi.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AccountRepository accountRepo;
     //    @Autowired
     //    private UserService userService;
 
@@ -34,6 +38,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public User saveAndFlush(User user){
         User result = userRepository.saveAndFlush(user);
         return result;
+    }
+
+    public Account saveAndFlushAccount(Account account){
+        return accountRepo.saveAndFlush(account);
+    }
+
+    public Account findAccountByUserid(String userid){
+        return accountRepo.findByUserid(userid);
     }
 
 }

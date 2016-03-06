@@ -24,4 +24,8 @@ public class AuthenticationResponse extends ModelBase {
         this.token = token;
     }
 
+
+
+
+
 }
