@@ -4,6 +4,8 @@ import md.mi.model.json.request.TransactionRequest;
 import md.mi.service.impl.DbService;
 import md.mi.transaction.exceptions.TransactionTypeException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Created by ael on 3/7/16.
  *  TransactionHandler is an abstract class it implements Chain of Responsability Pattern
@@ -15,7 +17,7 @@ public abstract class TransactionHandler {
 
     private TransactionHandler _succesor;
 
-    //@Autowired
+    @Autowired
     protected DbService dbService;
 
     public void setSuccesor(TransactionHandler succesor) {

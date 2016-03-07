@@ -1,5 +1,7 @@
 package md.mi.controller.rest.utils;
 
+import javax.annotation.PostConstruct;
+
 import md.mi.domain.entity.Account;
 import md.mi.domain.entity.User;
 import md.mi.domain.entity.UserBuilder;
@@ -10,10 +12,12 @@ import md.mi.model.json.response.ErrorResponse;
 import md.mi.model.json.response.RegisterResponse;
 import md.mi.model.security.AuthUser;
 import md.mi.service.impl.DbService;
-
 import md.mi.transaction.exceptions.TransactionTypeException;
 import md.mi.transaction.handler.TransactionHandler;
+import md.mi.transaction.handler.impl.EmailTransactionHandler;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,19 +28,19 @@ import org.springframework.stereotype.Component;
 public class RestUtils {
 
     @Autowired
+    @Qualifier("dbService")
     private DbService dbService;
 
     ErrorResponse error;
 
     TransactionHandler handler;
-/*
     @PostConstruct
     private void initHandlers(){
         handler = new EmailTransactionHandler();
-        //Handler h2 = new SpecificHandler();
-        //handler.setSuccessor(h2);...
+        //        Handler h2 = new SpecificHandler();
+        //        handler.setSuccessor(h2);...
     }
-*/
+
     public ResponseEntity<?> registerNewUser(RegisterRequest registerRequest){
         try{
             dbService.loadUserByUsername(registerRequest.getEmail());
@@ -86,6 +90,8 @@ public class RestUtils {
 
             return new ResponseEntity<ErrorResponse>(response, HttpStatus.FORBIDDEN);
         }
+
+
     }
 
 }

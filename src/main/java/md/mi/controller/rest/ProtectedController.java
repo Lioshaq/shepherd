@@ -1,8 +1,10 @@
 package md.mi.controller.rest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import md.mi.controller.rest.utils.RestUtils;
 import md.mi.model.json.request.TransactionRequest;
-import md.mi.service.impl.DbService;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 @RestController
 public class ProtectedController {
@@ -28,8 +27,6 @@ public class ProtectedController {
       demonstrated below with 'securityService'.
      **/
     Logger logger = Logger.getLogger("Protected Contrller");
-    @Autowired
-    private DbService userDetailsServiceImpl;
 
     @RequestMapping(value="/protected", method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
