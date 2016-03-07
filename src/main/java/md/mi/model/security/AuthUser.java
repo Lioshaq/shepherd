@@ -2,6 +2,7 @@ package md.mi.model.security;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +19,7 @@ public class AuthUser implements UserDetails {
      */
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private UUID id;
     @NotNull
     private String username;
     @NotNull
@@ -36,7 +37,7 @@ public class AuthUser implements UserDetails {
         super();
     }
 
-    public AuthUser(String id, String username, String password, String email, Date lastPasswordReset, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(UUID id, String username, String password, String email, Date lastPasswordReset, Collection<? extends GrantedAuthority> authorities) {
         this.setId(id);
         this.setUsername(username);
         this.setPassword(password);
@@ -45,11 +46,11 @@ public class AuthUser implements UserDetails {
         this.setAuthorities(authorities);
     }
 
-    public String getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

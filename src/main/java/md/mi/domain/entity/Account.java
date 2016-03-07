@@ -2,17 +2,15 @@ package md.mi.domain.entity;
 
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import md.mi.domain.base.DomainBase;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(schema="public", name="account")
@@ -23,19 +21,30 @@ public class Account extends DomainBase {
      */
     private static final long serialVersionUID = 1L;
 
-    private String id;
-    private String userid;
+    @Id
+    @Column(name = "id", nullable=false)
+    //    @GeneratedValue(generator="system-uuid")
+    //    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID id;
+
+    @Column(name = "userid", nullable=false)
+    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID userid;
     private Date date_open;
     private Date date_close;
     private Integer balance;
     private Integer currency_code;
     private String status;
 
+    @Column(name = "accountNumber")
+    private Long accountNumber;
     public Account(){
         super();
     }
 
-    public Account(String userid, Integer balance, Integer currency_code, String status) {
+
+    public Account(UUID userid, Integer balance, Integer currency_code, String status) {
         super();
 
         this.userid = userid;
@@ -45,7 +54,7 @@ public class Account extends DomainBase {
     }
 
 
-    public Account(String id, String userid, Date date_open, Date date_close,
+    public Account(UUID id, UUID userid, Date date_open, Date date_close,
             Integer balance, Integer currency_code, String status) {
         super();
         this.id = id;
@@ -57,29 +66,40 @@ public class Account extends DomainBase {
         this.status = status;
     }
 
-    @Id
-    @Column(name = "id", nullable=false)
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid",
-    strategy = "uuid")
-    public String getId() {
+
+
+    public UUID getId() {
         return id;
     }
 
-    @Column(name = "userid", nullable=false)
-    public String getUserid() {
+    public UUID getUserid() {
         return userid;
     }
 
     @PrePersist
     public void preInsert(){
-        date_open= new java.util.Date();
+        System.out.println("Pre authorize");
+        if(this.id == null) {
+            this.id = UUID.randomUUID();
+            date_open= new java.util.Date();    
+            this.balance = 0; 
+        }
+
     }
 
     @Column(name = "date_open")
     public Date getDate_open() {
         return date_open;
     }
+
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
 
     @Column(name = "date_close")
     public Date getDate_close() {
@@ -101,11 +121,11 @@ public class Account extends DomainBase {
         return status;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public void setUserid(String userid) {
+    public void setUserid(UUID userid) {
         this.userid = userid;
     }
 

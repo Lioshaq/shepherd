@@ -74,6 +74,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
         .csrf()
         .disable()
+        //.addFilterBefore(new LocaleFilter(), LogoutFilter.class)
         .exceptionHandling()
         .authenticationEntryPoint(this.unauthorizedHandler)
         .and()

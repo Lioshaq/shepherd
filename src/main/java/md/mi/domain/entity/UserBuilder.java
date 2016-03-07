@@ -34,7 +34,7 @@ public class UserBuilder {
 
     public User build() {
         UUID uid = UUID.randomUUID();
-        return new User(uid.toString(), builderEmail, builderPassword, builderPhone,
+        return new User(uid, builderEmail, builderPassword, builderPhone,
                 builderEmail, builderLastPasswordReset, builderAuthorities);
     }
 

@@ -15,7 +15,7 @@
         incrementBy="1"/> -->
     <!-- </changeSet> -->
 
-    <changeSet author="ael" id="dropTable_users" runAlways="true" dbms="postgresql">
+    <changeSet author="ael" id="dropTable_users" runOnChange="true" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="users" schemaName="public" />
         </preConditions>
@@ -24,14 +24,14 @@
             tableName="users" />
     </changeSet>
     <changeSet author="ael" id="table_users_create" runAlways="true" dbms="postgresql">
-        <preConditions onFail="HALT">
+        <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="users" schemaName="public"/>
             </not>
         </preConditions>
         <comment>Comments should go after preCondition. create datbase.</comment>
         <createTable tableName="users" schemaName="public">
-            <column name="id" type="varchar(100)">
+            <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="username" type="varchar(30)">
@@ -68,7 +68,7 @@
 
     </changeSet>
 
-    <changeSet author="ael" id="dropTable_account"  runAlways="true">
+    <changeSet author="ael" id="dropTable_account"  runOnChange="true">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="account" schemaName="public" />
         </preConditions>
@@ -83,12 +83,13 @@
             </not>
         </preConditions>
         <createTable tableName="account" schemaName="public">
-            <column name="id" type="varchar(100)">
+            <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="userid" type="varchar(100)">
+            <column name="userid" type="UUID">
                 <constraints nullable="false" />
             </column>
+            <column name="accountNumber" type="bigint"  />
             <column name="date_open" type="date"  />
             <column name="date_close" type="date"/>
             <column name="balance" type="integer" />

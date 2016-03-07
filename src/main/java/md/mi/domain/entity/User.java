@@ -1,6 +1,7 @@
 package md.mi.domain.entity;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,15 @@ import md.mi.domain.base.DomainBase;
 public class User extends DomainBase {
 
     private static final long serialVersionUID = 2353528370345499815L;
-    private String id;
+    @Id
+    @Column(name = "id")
+    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
+    private UUID id;
     private String username;
     private String password;
     private String email;
+
+    @Column(name = "last_password_reset")
     private Date lastPasswordReset;
     private String authorities;
     private String phone;
@@ -30,7 +36,7 @@ public class User extends DomainBase {
         super();
     }
 
-    public User(String id,String username, String password, String phone, String email, Date lastPasswordReset, String authorities) {
+    public User(UUID id,String username, String password, String phone, String email, Date lastPasswordReset, String authorities) {
         this.setId(id);
         this.setUsername(username);
         this.setPassword(password);
@@ -40,15 +46,11 @@ public class User extends DomainBase {
         this.setAuthorities(authorities);
     }
 
-    @Id
-    @Column(name = "id")
-    //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
-    //    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
-    public String getId() {
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -88,7 +90,6 @@ public class User extends DomainBase {
         this.email = email;
     }
 
-    @Column(name = "last_password_reset")
     public Date getLastPasswordReset() {
         return this.lastPasswordReset;
     }

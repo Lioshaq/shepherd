@@ -1,21 +1,20 @@
 package md.mi.controller.rest;
 
-import md.mi.domain.entity.Account;
-import md.mi.model.json.response.AccountInfo;
-import md.mi.model.security.AuthUser;
-import md.mi.service.impl.UserDetailsServiceImpl;
+import md.mi.controller.rest.utils.RestUtils;
+import md.mi.service.impl.DBService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
 public class ProtectedController {
+
+    @Autowired
+    private RestUtils restUtils;
 
     /**
       This is an example of some different kinds of granular restriction for endpoints. You can use the built-in SPEL expressions
@@ -24,7 +23,7 @@ public class ProtectedController {
       demonstrated below with 'securityService'.
      **/
     @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private DBService userDetailsServiceImpl;
 
     @RequestMapping(value="/protected", method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
@@ -38,12 +37,7 @@ public class ProtectedController {
 
     @RequestMapping(value ="/account",method = RequestMethod.GET)
     public ResponseEntity<?> getAccount() {
+        return restUtils.getAccount();
 
-        AuthUser user = (AuthUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = userDetailsServiceImpl.findAccountByUserid(user.getId());
-        AccountInfo accountResponse = new AccountInfo();
-        accountResponse.setBalance(account.getBalance());
-        accountResponse.setId(account.getId());
-        return ResponseEntity.ok(accountResponse);
     } 
 }

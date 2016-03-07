@@ -1,5 +1,7 @@
 package md.mi.service.impl;
 
+import java.util.UUID;
+
 import md.mi.domain.entity.Account;
 import md.mi.domain.entity.User;
 import md.mi.model.factory.AuthUserFactory;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class DBService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -44,8 +46,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return accountRepo.saveAndFlush(account);
     }
 
-    public Account findAccountByUserid(String userid){
+    public Account findAccountByUserid(UUID userid){
         return accountRepo.findByUserid(userid);
+    }
+
+    public void saveAccount(Account account) {
+        accountRepo.saveAndFlush(account);
     }
 
 }
