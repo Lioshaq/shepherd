@@ -9,15 +9,16 @@ import md.mi.repository.AccountRepository;
 import md.mi.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class DBService implements UserDetailsService {
+public class DbService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -52,6 +53,12 @@ public class DBService implements UserDetailsService {
 
     public void saveAccount(Account account) {
         accountRepo.saveAndFlush(account);
+    }
+
+    @Transactional
+    public void makeTransfer(Account from, Account to) {
+        saveAndFlushAccount(from);
+        saveAndFlushAccount(to);
     }
 
 }

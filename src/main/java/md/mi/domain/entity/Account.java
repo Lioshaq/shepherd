@@ -37,8 +37,8 @@ public class Account extends DomainBase {
     private Integer currency_code;
     private String status;
 
-    @Column(name = "accountNumber")
-    private Long accountNumber;
+    @Column(name = "number")
+    private Long number;
     public Account(){
         super();
     }
@@ -92,12 +92,12 @@ public class Account extends DomainBase {
         return date_open;
     }
 
-    public Long getAccountNumber() {
-        return accountNumber;
+    public Long getNumber() {
+        return number;
     }
 
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setNumber(Long number) {
+        this.number = number;
     }
 
 
@@ -147,6 +147,10 @@ public class Account extends DomainBase {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void addToBalance(int amount){
+        this.balance = this.balance + amount;
     }
 
 

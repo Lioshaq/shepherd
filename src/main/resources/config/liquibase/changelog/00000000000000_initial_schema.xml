@@ -68,14 +68,14 @@
 
     </changeSet>
 
-    <changeSet author="ael" id="dropTable_account"  runOnChange="true">
+    <changeSet author="ael1" id="dropTable_account"  runOnChange="true">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="account" schemaName="public" />
         </preConditions>
         <dropTable cascadeConstraints="true" schemaName="public"
             tableName="account" />
     </changeSet>
-    <changeSet id="table_account_drop_create" author="ael_"
+    <changeSet id="table_account_drop_create" author="ael"
          runAlways="true">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -89,7 +89,7 @@
             <column name="userid" type="UUID">
                 <constraints nullable="false" />
             </column>
-            <column name="accountNumber" type="bigint"  />
+            <column name="number" type="bigint"  />
             <column name="date_open" type="date"  />
             <column name="date_close" type="date"/>
             <column name="balance" type="integer" />

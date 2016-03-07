@@ -15,5 +15,5 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"phone":"+37369111111",
 Get Token
 curl -i -H "Content-Type: application/json" -X POST -d '{"username":"test@gmail.com","password":"password"}' http://localhost:8080/auth
 
-curl -i -H "Content-Type: application/json" -H "X-Auth-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4ZWkubWVsbmljQGdtYWlsLmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTQ1NzI1OTA2NjI5NywiZXhwIjoxNDU3MzU5MDY2fQ.JCF30UaiRX1YrjxH9gG-OAVnu8T5rOQDUb2K363QErT-hsQsSpaR_t0b2Lug22tUAr1s509NlnP4Ecg_ttxp2Q" -X GET http://localhost:8080/account
+curl -i -H "Content-Type: application/json" -H "X-Auth-Token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4ZWkubWVsbmljQGdtYWlsLmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTQ1NzM4MjI0MzY2MywiZXhwIjoxNDU3NDgyMjQzfQ.R9kgt9H5Bfn9PGIvNwkOHo3UEDWwa4dYLq2v-ZrUGFRXtJJtcOzYRlGmqdoIjAoUzeWIFJkLJdhhutQ_Osg1jg" -X GET http://localhost:8080/account
 
